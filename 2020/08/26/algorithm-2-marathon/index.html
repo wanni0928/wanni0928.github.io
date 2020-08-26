@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>algorithm-2-marathon | Wannistudio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="완주하지 못한 선수문제 설명수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다. 마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세">
+<meta property="og:type" content="article">
+<meta property="og:title" content="algorithm-2-marathon">
+<meta property="og:url" content="https://wanni0928.github.io/2020/08/26/algorithm-2-marathon/index.html">
+<meta property="og:site_name" content="Wannistudio">
+<meta property="og:description" content="완주하지 못한 선수문제 설명수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다. 마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-26T06:26:02.000Z">
+<meta property="article:modified_time" content="2020-08-26T06:26:18.251Z">
+<meta property="article:author" content="wanni0928">
+<meta property="article:tag" content="backend, develope, server">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Wannistudio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Wannistudio</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wanni0928.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-algorithm-2-marathon" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/26/algorithm-2-marathon/" class="article-date">
+  <time datetime="2020-08-26T06:26:02.000Z" itemprop="datePublished">2020-08-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      algorithm-2-marathon
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="완주하지-못한-선수"><a href="#완주하지-못한-선수" class="headerlink" title="완주하지 못한 선수"></a>완주하지 못한 선수</h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.</p>
+<p>마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.</p>
+<h2 id="제한사항"><a href="#제한사항" class="headerlink" title="제한사항"></a>제한사항</h2><ul>
+<li>마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.</li>
+<li>completion의 길이는 participant의 길이보다 1 작습니다.</li>
+<li>참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.</li>
+<li>참가자 중에는 동명이인이 있을 수 있습니다.</li>
+</ul>
+<h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
+<li><p>문제 인식</p>
+<ul>
+<li><p>‘참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.’ : 대소문자 구문x</p>
+</li>
+<li><p>참가자 중에는 동명이인이 있을 수 있다. : 단순히 ‘이름’을 기준으로 진행하면, 중복 삭제가 될 수 있다.</p>
+</li>
+<li><p>‘completion의 길이는 participant의 길이보다 1 작습니다.’ : 완주하지 못한 선수는 무조건 1명이다.</p>
+</li>
+</ul>
+</li>
+<li><p>문제 해결</p>
+<ol>
+<li><p>같은 이름의 인덱스도 구분해야하기 때문에, HashMap으로 key-value에 해당하는 재너릭 변수명을 각각 ‘이름’, ‘중복횟수’로 지정하고 인스턴스를 초기화 한다.</p>
+</li>
+<li><p>‘참가자 배열’을 향상된 for문을 돌려 해쉬맵에 “이름”, 1로 put 하되, 같은 이름의 인덱스로 put을 하게 될때마다, 기존 ‘중복횟수’에서 1을 더한다.</p>
+</li>
+<li><p>‘경쟁자 배열’ 향상된 for문을 돌려 동일하게 해쉬맵에 적용하되, 이미 적용된 해쉬맵이 검색될 때마다. 기존 중복횟수에서 -1을 한다.</p>
+</li>
+<li><p>해쉬맵 인스턴스가 두개의 for문을 거치면, 결과적으로 0 혹은 1의 값을 가진 키셋이 형성된다.<br> 해당 해쉬맵에 Iterator와 Entry를 이용해, 해쉬 테이블을 전체적으로 검색하고 그중에서 중복횟수 ‘값’이 1을 가진 키가 검색된다면, 그 키 값을 리턴하고, 프로그램을 끝낸다. </p>
+</li>
+</ol>
+</li>
+<li><p>주의사항</p>
+<ul>
+<li><p>다른 사람의 풀이를 보면, 간혹 해쉬앱을 바로 for문에 적용하여, 검색하는 풀이를 볼 수 있는데, 코드의 길이와 가독성을 보면 언듯 더 편리해보이지만, EntrySet의 getValue()가 HashMap의 get() 보다 사용하는 함수의 갯수가 더 적고, 실행 속도도 빠르기 때문에, 해쉬에서 값이나 키를 출력할 때는 EntrySet을 사용하는 것이 결과적으로는 더 효율적이다.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3870064/performance-considerations-for-keyset-and-entryset-of-map">출처 : https://stackoverflow.com/questions/3870064/performance-considerations-for-keyset-and-entryset-of-map</a></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>출처 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42576?language=java">https://programmers.co.kr/learn/courses/30/lessons/42576?language=java</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/26/algorithm-2-marathon/" data-id="ckeazwta60000r4v58ayudp3z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/25/algorithm-1-printer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">algorithm -1 PhoneNumber</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hash/" style="font-size: 10px;">hash</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/26/algorithm-2-marathon/">algorithm-2-marathon</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/25/algorithm-1-printer/">algorithm -1 PhoneNumber</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/07/hexo-new-post/">hexo new post</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/07/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wanni0928<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
