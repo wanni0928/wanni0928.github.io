@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>algorithm-3-carpet | Wannistudio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="카펫 출처: 프로그래머스문제 설명Leo는 카펫을 사러 갔다가 아래 그림과 같이 중앙에는 노란색으로 칠해져 있고 테두리 1줄은 갈색으로 칠해져 있는 격자 모양 카펫을 봤습니다.  Leo는 집으로 돌아와서 아까 본 카펫의 노란색과 갈색으로 색칠된 격자의 개수는 기억했지만, 전체 카펫의 크기는 기억하지 못했습니다. Leo가 본 카펫에서 갈색 격자의 수 brown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="algorithm-3-carpet">
+<meta property="og:url" content="https://wanni0928.github.io/2020/08/28/algorithm-3-carpet/index.html">
+<meta property="og:site_name" content="Wannistudio">
+<meta property="og:description" content="카펫 출처: 프로그래머스문제 설명Leo는 카펫을 사러 갔다가 아래 그림과 같이 중앙에는 노란색으로 칠해져 있고 테두리 1줄은 갈색으로 칠해져 있는 격자 모양 카펫을 봤습니다.  Leo는 집으로 돌아와서 아까 본 카펫의 노란색과 갈색으로 색칠된 격자의 개수는 기억했지만, 전체 카펫의 크기는 기억하지 못했습니다. Leo가 본 카펫에서 갈색 격자의 수 brown">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/wanni0928/-algorithm/java/JAVA/Carpet/images/carpet.png">
+<meta property="article:published_time" content="2020-08-28T07:54:36.000Z">
+<meta property="article:modified_time" content="2020-08-28T07:57:09.245Z">
+<meta property="article:author" content="wanni0928">
+<meta property="article:tag" content="bp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/wanni0928/-algorithm/java/JAVA/Carpet/images/carpet.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Wannistudio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Wannistudio</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wanni0928.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-algorithm-3-carpet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/28/algorithm-3-carpet/" class="article-date">
+  <time datetime="2020-08-28T07:54:36.000Z" itemprop="datePublished">2020-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      algorithm-3-carpet
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="카펫-출처-프로그래머스"><a href="#카펫-출처-프로그래머스" class="headerlink" title="카펫 출처: 프로그래머스"></a>카펫 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42842">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>Leo는 카펫을 사러 갔다가 아래 그림과 같이 중앙에는 노란색으로 칠해져 있고 테두리 1줄은 갈색으로 칠해져 있는 격자 모양 카펫을 봤습니다.</p>
+<p><img src="https://raw.githubusercontent.com/wanni0928/-algorithm/java/JAVA/Carpet/images/carpet.png" alt="카펫"></p>
+<p>Leo는 집으로 돌아와서 아까 본 카펫의 노란색과 갈색으로 색칠된 격자의 개수는 기억했지만, 전체 카펫의 크기는 기억하지 못했습니다.</p>
+<p>Leo가 본 카펫에서 갈색 격자의 수 brown, 노란색 격자의 수 yellow가 매개변수로 주어질 때 카펫의 가로, 세로 크기를 순서대로 배열에 담아 return 하도록 solution 함수를 작성해주세요.</p>
+<h2 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h2><ul>
+<li>갈색 격자의 수 brown은 8 이상 5,000 이하인 자연수입니다.</li>
+<li>노란색 격자의 수 yellow는 1 이상 2,000,000 이하인 자연수입니다.</li>
+<li>카펫의 가로 길이는 세로 길이와 같거나, 세로 길이보다 깁니다.</li>
+</ul>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th>brown</th>
+<th>yellow</th>
+<th>return</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10</td>
+<td>2</td>
+<td>[4, 3]</td>
+</tr>
+<tr>
+<td>8</td>
+<td>1</td>
+<td>[3, 3]</td>
+</tr>
+<tr>
+<td>24</td>
+<td>24</td>
+<td>[8, 6]</td>
+</tr>
+</tbody></table>
+<h2 id="문제인식"><a href="#문제인식" class="headerlink" title="문제인식"></a>문제인식</h2><ol>
+<li>‘중앙에는 노란색’, ‘테두리 1줄은 갈색’ =&gt; 갈색이 2줄 이상 연속으로 배치되는 경우는 없다. (안쪽에 노란색을 채우고 겉에 갈색으로 감싼다.)</li>
+<li>카펫의 가로 길이는 세로 길이와 같거나, 세로 길이보다 길다. =&gt; 정사각형 or 넓은 직사각형.</li>
+</ol>
+<h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
+<li>갈색 테두리의 갯수 = (노란 카펫 높이 + 노란 카펫 폭 + 2) * 2</li>
+<li>노란 카펫의 타일 갯수 만큼 반복문을 돌린다.</li>
+<li>노란 카펫의 가로, 세로 길이를 구하고, 1번 공식을 대입한다.</li>
+<li>해당 공식이 주어진 갈색 카펫의 갯수와 일치하면, 반복문을 끝내고 정답을 리턴한다.</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/28/algorithm-3-carpet/" data-id="ckedxzdrk0000twv5hj80c5mo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bp/" rel="tag">bp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/08/28/algorithm-4-spicy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          algorithm-4-spicy
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/27/algorithm-theory-Dynamic-programming/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">algorithm-theory-Dynamic-programming</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-5-disk-controller/">algorithm-5-disk-controller</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-4-spicy/">algorithm-4-spicy</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/27/algorithm-theory-Dynamic-programming/">algorithm-theory-Dynamic-programming</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wanni0928<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

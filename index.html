@@ -67,6 +67,354 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-algorithm-6-h-index" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/28/algorithm-6-h-index/" class="article-date">
+  <time datetime="2020-08-28T07:59:47.000Z" itemprop="datePublished">2020-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="디스크컨트롤러-출처-프로그래머스"><a href="#디스크컨트롤러-출처-프로그래머스" class="headerlink" title="디스크컨트롤러 출처: 프로그래머스"></a>디스크컨트롤러 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42627">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>하드디스크는 한 번에 하나의 작업만 수행할 수 있습니다. 디스크 컨트롤러를 구현하는 방법은 여러 가지가 있습니다. 가장 일반적인 방법은 요청이 들어온 순서대로 처리하는 것입니다.</p>
+<p>예를들어</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 0ms 시점에 3ms가 소요되는 A작업 요청</span><br><span class="line">- 1ms 시점에 9ms가 소요되는 B작업 요청</span><br><span class="line">- 2ms 시점에 6ms가 소요되는 C작업 요청</span><br></pre></td></tr></table></figure>
+
+<p>와 같은 요청이 들어왔습니다. 이를 그림으로 표현하면 아래와 같습니다.<br><img src="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/38dc6a53-2d21-4c72-90ac-f059729c51d5.png" alt="디스크 컨트롤러"></p>
+<p>한 번에 하나의 요청만을 수행할 수 있기 때문에 각각의 작업을 요청받은 순서대로 처리하면 다음과 같이 처리 됩니다.</p>
+<p><img src="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/90b91fde-cac4-42c1-98b8-8f8431c52dcf.png" alt="디스크 컨트롤러2"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료 (요청에서 종료까지 : 3ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 3ms 시점에 작업을 시작해서 12ms 시점에 작업 완료(요청에서 종료까지 : 11ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 12ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 16ms)</span><br></pre></td></tr></table></figure>
+<p>이 때 각 작업의 요청부터 종료까지 걸린 시간의 평균은 10ms(= (3 + 11 + 16) / 3)가 됩니다.</p>
+<p>하지만 A → C → B 순서대로 처리하면</p>
+<p><img src="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/a6cff04d-86bb-4b5b-98bf-6359158940ac.png" alt="디스크 컨트롤러3"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료(요청에서 종료까지 : 3ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 3ms 시점에 작업을 시작해서 9ms 시점에 작업 완료(요청에서 종료까지 : 7ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 9ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 17ms)</span><br></pre></td></tr></table></figure>
+<p>이렇게 A → C → B의 순서로 처리하면 각 작업의 요청부터 종료까지 걸린 시간의 평균은 9ms(= (3 + 7 + 17) / 3)가 됩니다.</p>
+<p>각 작업에 대해 [작업이 요청되는 시점, 작업의 소요시간]을 담은 2차원 배열 jobs가 매개변수로 주어질 때, 작업의 요청부터 종료까지 걸린 시간의 평균을 가장 줄이는 방법으로 처리하면 평균이 얼마가 되는지 return 하도록 solution 함수를 작성해주세요. (단, 소수점 이하의 수는 버립니다)</p>
+<h2 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h2><ul>
+<li>jobs의 길이는 1 이상 500 이하입니다.</li>
+<li>jobs의 각 행은 하나의 작업에 대한 [작업이 요청되는 시점, 작업의 소요시간] 입니다.</li>
+<li>각 작업에 대해 작업이 요청되는 시간은 0 이상 1,000 이하입니다.</li>
+<li>각 작업에 대해 작업의 소요시간은 1 이상 1,000 이하입니다.</li>
+<li>하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.</li>
+</ul>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th>jobs</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[[0, 3], [1, 9], [2, 6]]</td>
+<td>9</td>
+</tr>
+</tbody></table>
+<h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><p>문제에 주어진 예와 같습니다.</p>
+<ul>
+<li>0ms 시점에 3ms 걸리는 작업 요청이 들어옵니다.</li>
+<li>1ms 시점에 9ms 걸리는 작업 요청이 들어옵니다.</li>
+<li>2ms 시점에 6ms 걸리는 작업 요청이 들어옵니다.</li>
+</ul>
+<h2 id="문제인식"><a href="#문제인식" class="headerlink" title="문제인식"></a>문제인식</h2><ol>
+<li>‘하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.’<br> =&gt; 시작은 작업 요청 시점이 0인 작업부터, 바로 우선순위 큐로 정렬하면, 이 규칙에 어긋난다.</li>
+<li>평균 처리시간을 줄이기 위해선, 작업 요청 시점 순으로 처리하는 것보다, 작업 처리시간의 적은 것부터 처리하는것이 더 효율적이다.</li>
+</ol>
+<h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
+<li>문제인식 1번 부분을 충족하기 위해, 우선 주어진 배열을 ‘작업요청시점’의 오름차순으로 정렬한다.</li>
+<li>문제인식 2번 부분을 충족하기 위한, 우선순위 큐의 인스턴스를 생성하고, ‘작업처리시간’의 오름차순의 정렬기준을 준다.</li>
+<li>문제를 해결하기 위해, 반복문을 선언하는데, 종료 기준을 주어진 배열의 맨끝 인덱스까지, 혹은 큐가 비어있지 않을 때까지로 정한다.</li>
+<li>3번의 반복문 안에 큐에 디스크 작업을 넣는 반복문을 선언하는데, 종료 기준을 ‘작업요청 시점’이하 그리고, 인덱스 번호가 배열의 길이미만 일때 까지로 정한다.</li>
+<li>3번 반복문이 도는 동안, 4번 반복문을 통해 큐에 jobs 데이터가 삽입된다.</li>
+<li>만약 큐가 비어있다면, ‘작업 시작점’에 가장 최근 ,jobs 데이터의 ‘작업요청 시점’을 넣는다.</li>
+<li>큐가 비어있지 않다면, 큐의 데이터를 꺼낸다. 작업 처리시간은 <code>이전작업 완료 시점 - 작업이 요청되는 시점 + 작업의 처리시간</code> 로 이 공식대로 총 작업 처리시간을 구한다.</li>
+<li>모든 디스크 작업의 처리시간 합계를 구하고 평균을 구한 뒤, 그 정답을 리턴한다.</li>
+</ol>
+<h2 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h2><ul>
+<li>대기시간 역시 작업 처리시간에 포함해야 한다. 즉, 7번의 작업 처리시간 공식은 <code>대기사간 + 작업처리시간</code>이다.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/28/algorithm-6-h-index/" data-id="ckedy4tt2000624v5adle13mj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-algorithm-5-disk-controller" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/28/algorithm-5-disk-controller/" class="article-date">
+  <time datetime="2020-08-28T07:58:54.000Z" itemprop="datePublished">2020-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/28/algorithm-5-disk-controller/">algorithm-5-disk-controller</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="디스크컨트롤러-출처-프로그래머스"><a href="#디스크컨트롤러-출처-프로그래머스" class="headerlink" title="디스크컨트롤러 출처: 프로그래머스"></a>디스크컨트롤러 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42627">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>하드디스크는 한 번에 하나의 작업만 수행할 수 있습니다. 디스크 컨트롤러를 구현하는 방법은 여러 가지가 있습니다. 가장 일반적인 방법은 요청이 들어온 순서대로 처리하는 것입니다.</p>
+<p>예를들어</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 0ms 시점에 3ms가 소요되는 A작업 요청</span><br><span class="line">- 1ms 시점에 9ms가 소요되는 B작업 요청</span><br><span class="line">- 2ms 시점에 6ms가 소요되는 C작업 요청</span><br></pre></td></tr></table></figure>
+
+<p>와 같은 요청이 들어왔습니다. 이를 그림으로 표현하면 아래와 같습니다.<br><img src="https://raw.githubusercontent.com/wanni0928/-algorithm/master/JAVA/DiskController/images/38dc6a53-2d21-4c72-90ac-f059729c51d5.png" alt="디스크 컨트롤러"></p>
+<p>한 번에 하나의 요청만을 수행할 수 있기 때문에 각각의 작업을 요청받은 순서대로 처리하면 다음과 같이 처리 됩니다.</p>
+<p><img src="https://raw.githubusercontent.com/wanni0928/-algorithm/master/JAVA/DiskController/images/90b91fde-cac4-42c1-98b8-8f8431c52dcf.png" alt="디스크 컨트롤러2"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료 (요청에서 종료까지 : 3ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 3ms 시점에 작업을 시작해서 12ms 시점에 작업 완료(요청에서 종료까지 : 11ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 12ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 16ms)</span><br></pre></td></tr></table></figure>
+<p>이 때 각 작업의 요청부터 종료까지 걸린 시간의 평균은 10ms(= (3 + 11 + 16) / 3)가 됩니다.</p>
+<p>하지만 A → C → B 순서대로 처리하면</p>
+<p><img src="https://raw.githubusercontent.com/wanni0928/-algorithm/master/JAVA/DiskController/images/a6cff04d-86bb-4b5b-98bf-6359158940ac.png" alt="디스크 컨트롤러3"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료(요청에서 종료까지 : 3ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 3ms 시점에 작업을 시작해서 9ms 시점에 작업 완료(요청에서 종료까지 : 7ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 9ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 17ms)</span><br></pre></td></tr></table></figure>
+<p>이렇게 A → C → B의 순서로 처리하면 각 작업의 요청부터 종료까지 걸린 시간의 평균은 9ms(= (3 + 7 + 17) / 3)가 됩니다.</p>
+<p>각 작업에 대해 [작업이 요청되는 시점, 작업의 소요시간]을 담은 2차원 배열 jobs가 매개변수로 주어질 때, 작업의 요청부터 종료까지 걸린 시간의 평균을 가장 줄이는 방법으로 처리하면 평균이 얼마가 되는지 return 하도록 solution 함수를 작성해주세요. (단, 소수점 이하의 수는 버립니다)</p>
+<h2 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h2><ul>
+<li>jobs의 길이는 1 이상 500 이하입니다.</li>
+<li>jobs의 각 행은 하나의 작업에 대한 [작업이 요청되는 시점, 작업의 소요시간] 입니다.</li>
+<li>각 작업에 대해 작업이 요청되는 시간은 0 이상 1,000 이하입니다.</li>
+<li>각 작업에 대해 작업의 소요시간은 1 이상 1,000 이하입니다.</li>
+<li>하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.</li>
+</ul>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th>jobs</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[[0, 3], [1, 9], [2, 6]]</td>
+<td>9</td>
+</tr>
+</tbody></table>
+<h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><p>문제에 주어진 예와 같습니다.</p>
+<ul>
+<li>0ms 시점에 3ms 걸리는 작업 요청이 들어옵니다.</li>
+<li>1ms 시점에 9ms 걸리는 작업 요청이 들어옵니다.</li>
+<li>2ms 시점에 6ms 걸리는 작업 요청이 들어옵니다.</li>
+</ul>
+<h2 id="문제인식"><a href="#문제인식" class="headerlink" title="문제인식"></a>문제인식</h2><ol>
+<li>‘하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.’<br> =&gt; 시작은 작업 요청 시점이 0인 작업부터, 바로 우선순위 큐로 정렬하면, 이 규칙에 어긋난다.</li>
+<li>평균 처리시간을 줄이기 위해선, 작업 요청 시점 순으로 처리하는 것보다, 작업 처리시간의 적은 것부터 처리하는것이 더 효율적이다.</li>
+</ol>
+<h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
+<li>문제인식 1번 부분을 충족하기 위해, 우선 주어진 배열을 ‘작업요청시점’의 오름차순으로 정렬한다.</li>
+<li>문제인식 2번 부분을 충족하기 위한, 우선순위 큐의 인스턴스를 생성하고, ‘작업처리시간’의 오름차순의 정렬기준을 준다.</li>
+<li>문제를 해결하기 위해, 반복문을 선언하는데, 종료 기준을 주어진 배열의 맨끝 인덱스까지, 혹은 큐가 비어있지 않을 때까지로 정한다.</li>
+<li>3번의 반복문 안에 큐에 디스크 작업을 넣는 반복문을 선언하는데, 종료 기준을 ‘작업요청 시점’이하 그리고, 인덱스 번호가 배열의 길이미만 일때 까지로 정한다.</li>
+<li>3번 반복문이 도는 동안, 4번 반복문을 통해 큐에 jobs 데이터가 삽입된다.</li>
+<li>만약 큐가 비어있다면, ‘작업 시작점’에 가장 최근 ,jobs 데이터의 ‘작업요청 시점’을 넣는다.</li>
+<li>큐가 비어있지 않다면, 큐의 데이터를 꺼낸다. 작업 처리시간은 <code>이전작업 완료 시점 - 작업이 요청되는 시점 + 작업의 처리시간</code> 로 이 공식대로 총 작업 처리시간을 구한다.</li>
+<li>모든 디스크 작업의 처리시간 합계를 구하고 평균을 구한 뒤, 그 정답을 리턴한다.</li>
+</ol>
+<h2 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h2><ul>
+<li>대기시간 역시 작업 처리시간에 포함해야 한다. 즉, 7번의 작업 처리시간 공식은 <code>대기사간 + 작업처리시간</code>이다.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/28/algorithm-5-disk-controller/" data-id="ckedy4tst000124v52inf50gc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-algorithm-4-spicy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/28/algorithm-4-spicy/" class="article-date">
+  <time datetime="2020-08-28T07:57:41.000Z" itemprop="datePublished">2020-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/28/algorithm-4-spicy/">algorithm-4-spicy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="더-맵게-출처-프로그래머스"><a href="#더-맵게-출처-프로그래머스" class="headerlink" title="더 맵게 출처: 프로그래머스"></a>더 맵게 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42626">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>매운 것을 좋아하는 Leo는 모든 음식의 스코빌 지수를 K 이상으로 만들고 싶습니다. 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 Leo는 스코빌 지수가 가장 낮은 두 개의 음식을 아래와 같이 특별한 방법으로 섞어 새로운 음식을 만듭니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">섞은 음식의 스코빌 지수 &#x3D; 가장 맵지 않은 음식의 스코빌 지수 + (두 번째로 맵지 않은 음식의 스코빌 지수 * 2)</span><br></pre></td></tr></table></figure>
+
+<p>Leo는 모든 음식의 스코빌 지수가 K 이상이 될 때까지 반복하여 섞습니다.<br>Leo가 가진 음식의 스코빌 지수를 담은 배열 scoville과 원하는 스코빌 지수 K가 주어질 때, 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 섞어야 하는 최소 횟수를 return 하도록 solution 함수를 작성해주세요.</p>
+<h2 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h2><ul>
+<li>scoville의 길이는 2 이상 1,000,000 이하입니다.</li>
+<li>K는 0 이상 1,000,000,000 이하입니다.</li>
+<li>scoville의 원소는 각각 0 이상 1,000,000 이하입니다.</li>
+<li>모든 음식의 스코빌 지수를 K 이상으로 만들 수 없는 경우에는 -1을 return 합니다.</li>
+</ul>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th>scoville</th>
+<th>K</th>
+<th>return</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[1, 2, 3, 9, 10, 12]</td>
+<td>7</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><ol>
+<li><p>스코빌 지수가 1인 음식과 2인 음식을 섞으면 음식의 스코빌 지수가 아래와 같이 됩니다. 새로운 음식의 스코빌 지수 = 1 + (2 * 2) = 5 가진 음식의 스코빌 지수 = [5, 3, 9, 10, 12]</p>
+</li>
+<li><p>스코빌 지수가 3인 음식과 5인 음식을 섞으면 음식의 스코빌 지수가 아래와 같이 됩니다. 새로운 음식의 스코빌 지수 = 3 + (5 * 2) = 13 가진 음식의 스코빌 지수 = [13, 9, 10, 12]</p>
+</li>
+</ol>
+<p>모든 음식의 스코빌 지수가 7 이상이 되었고 이때 섞은 횟수는 2회입니다.</p>
+<h2 id="문제인식"><a href="#문제인식" class="headerlink" title="문제인식"></a>문제인식</h2><ol>
+<li>스코빌 공식에 의하면, 가장 맵지 않은 음식과 그 다음으로 맵지 않은 음식을 순차적으로 꺼낼 수 있는 자료구조가 필요하다.</li>
+<li>모든 음식이 스코빌 지수를 k 이상으로 만들어야한다. 뒤집어 생각해보면, 하나라도 스코빌 지수가 k 미만이면, 문제조건에 맞지 않는다.</li>
+</ol>
+<h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
+<li>우선순위 큐를 이용하여, 모든 음식의 스코빌 지수를 오름차순으로 정렬한다.</li>
+<li>스코빌 지수 공식에 따라, 두 개씩 뽑아야 하므로, 반복문을 선언할때, 반복조건을 큐의 데이터 갯수를 2개 까지로 제한한다.</li>
+<li>문제인식 2번에 따라, 하나라도, k 미만의 음식이 있으면, 실격이므로, 우선순위의 큐의 최소값(head에 해당하는 데이터)이 k 미만 역시 반복조건에 AND로 추가한다.</li>
+<li>반복문의 반복 횟수마다 섞은 횟수를 한개 씩 늘려준다.</li>
+<li>모든 음식이 K 지수 이상이라면, head 데이터 역시 K 지수 이상으로, 반복문이 끝날 것이고, 그 반복문의 횟수를 리턴하면, 그것이 정답이 될 것이다.</li>
+<li>만약 모든 음식을 섞었다면, 큐에 남은 데이터는 최종적으로 하나가 남을 것이다. 그 하나의 데이터가 K 지수보다 낮으면, 모든 음식이 K 지수 미만이므로 이 경우에는 -1을 리턴한다. </li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/28/algorithm-4-spicy/" data-id="ckedy4tsr000024v57rm62lb5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-algorithm-3-carpet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/28/algorithm-3-carpet/" class="article-date">
+  <time datetime="2020-08-28T07:54:36.000Z" itemprop="datePublished">2020-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="카펫-출처-프로그래머스"><a href="#카펫-출처-프로그래머스" class="headerlink" title="카펫 출처: 프로그래머스"></a>카펫 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42842">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>Leo는 카펫을 사러 갔다가 아래 그림과 같이 중앙에는 노란색으로 칠해져 있고 테두리 1줄은 갈색으로 칠해져 있는 격자 모양 카펫을 봤습니다.</p>
+<p><img src="https://raw.githubusercontent.com/wanni0928/-algorithm/java/JAVA/Carpet/images/carpet.png" alt="카펫"></p>
+<p>Leo는 집으로 돌아와서 아까 본 카펫의 노란색과 갈색으로 색칠된 격자의 개수는 기억했지만, 전체 카펫의 크기는 기억하지 못했습니다.</p>
+<p>Leo가 본 카펫에서 갈색 격자의 수 brown, 노란색 격자의 수 yellow가 매개변수로 주어질 때 카펫의 가로, 세로 크기를 순서대로 배열에 담아 return 하도록 solution 함수를 작성해주세요.</p>
+<h2 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h2><ul>
+<li>갈색 격자의 수 brown은 8 이상 5,000 이하인 자연수입니다.</li>
+<li>노란색 격자의 수 yellow는 1 이상 2,000,000 이하인 자연수입니다.</li>
+<li>카펫의 가로 길이는 세로 길이와 같거나, 세로 길이보다 깁니다.</li>
+</ul>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th>brown</th>
+<th>yellow</th>
+<th>return</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10</td>
+<td>2</td>
+<td>[4, 3]</td>
+</tr>
+<tr>
+<td>8</td>
+<td>1</td>
+<td>[3, 3]</td>
+</tr>
+<tr>
+<td>24</td>
+<td>24</td>
+<td>[8, 6]</td>
+</tr>
+</tbody></table>
+<h2 id="문제인식"><a href="#문제인식" class="headerlink" title="문제인식"></a>문제인식</h2><ol>
+<li>‘중앙에는 노란색’, ‘테두리 1줄은 갈색’ =&gt; 갈색이 2줄 이상 연속으로 배치되는 경우는 없다. (안쪽에 노란색을 채우고 겉에 갈색으로 감싼다.)</li>
+<li>카펫의 가로 길이는 세로 길이와 같거나, 세로 길이보다 길다. =&gt; 정사각형 or 넓은 직사각형.</li>
+</ol>
+<h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
+<li>갈색 테두리의 갯수 = (노란 카펫 높이 + 노란 카펫 폭 + 2) * 2</li>
+<li>노란 카펫의 타일 갯수 만큼 반복문을 돌린다.</li>
+<li>노란 카펫의 가로, 세로 길이를 구하고, 1번 공식을 대입한다.</li>
+<li>해당 공식이 주어진 갈색 카펫의 갯수와 일치하면, 반복문을 끝내고 정답을 리턴한다.</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/28/algorithm-3-carpet/" data-id="ckedxzdrk0000twv5hj80c5mo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bp/" rel="tag">bp</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-algorithm-theory-Dynamic-programming" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/27/algorithm-theory-Dynamic-programming/" class="article-date">
@@ -398,7 +746,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
     </div>
   </div>
 
@@ -408,7 +756,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a>
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
     </div>
   </div>
 
@@ -430,23 +778,23 @@
       <ul>
         
           <li>
+            <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-5-disk-controller/">algorithm-5-disk-controller</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-4-spicy/">algorithm-4-spicy</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/27/algorithm-theory-Dynamic-programming/">algorithm-theory-Dynamic-programming</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/26/algorithm-2-marathon/">algorithm-2-marathon</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/25/algorithm-1-printer/">algorithm -1 PhoneNumber</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/07/hexo-new-post/">hexo new post</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/07/hello-world/">Hello World</a>
           </li>
         
       </ul>

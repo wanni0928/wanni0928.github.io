@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>algorithm-4-spicy | Wannistudio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="더 맵게 출처: 프로그래머스문제 설명매운 것을 좋아하는 Leo는 모든 음식의 스코빌 지수를 K 이상으로 만들고 싶습니다. 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 Leo는 스코빌 지수가 가장 낮은 두 개의 음식을 아래와 같이 특별한 방법으로 섞어 새로운 음식을 만듭니다. 1섞은 음식의 스코빌 지수 &#x3D; 가장 맵지 않은 음식의 스코빌 지수">
+<meta property="og:type" content="article">
+<meta property="og:title" content="algorithm-4-spicy">
+<meta property="og:url" content="https://wanni0928.github.io/2020/08/28/algorithm-4-spicy/index.html">
+<meta property="og:site_name" content="Wannistudio">
+<meta property="og:description" content="더 맵게 출처: 프로그래머스문제 설명매운 것을 좋아하는 Leo는 모든 음식의 스코빌 지수를 K 이상으로 만들고 싶습니다. 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 Leo는 스코빌 지수가 가장 낮은 두 개의 음식을 아래와 같이 특별한 방법으로 섞어 새로운 음식을 만듭니다. 1섞은 음식의 스코빌 지수 &#x3D; 가장 맵지 않은 음식의 스코빌 지수">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-28T07:57:41.000Z">
+<meta property="article:modified_time" content="2020-08-28T07:58:22.199Z">
+<meta property="article:author" content="wanni0928">
+<meta property="article:tag" content="heap">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Wannistudio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Wannistudio</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wanni0928.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-algorithm-4-spicy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/28/algorithm-4-spicy/" class="article-date">
+  <time datetime="2020-08-28T07:57:41.000Z" itemprop="datePublished">2020-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      algorithm-4-spicy
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="더-맵게-출처-프로그래머스"><a href="#더-맵게-출처-프로그래머스" class="headerlink" title="더 맵게 출처: 프로그래머스"></a>더 맵게 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42626">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>매운 것을 좋아하는 Leo는 모든 음식의 스코빌 지수를 K 이상으로 만들고 싶습니다. 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 Leo는 스코빌 지수가 가장 낮은 두 개의 음식을 아래와 같이 특별한 방법으로 섞어 새로운 음식을 만듭니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">섞은 음식의 스코빌 지수 &#x3D; 가장 맵지 않은 음식의 스코빌 지수 + (두 번째로 맵지 않은 음식의 스코빌 지수 * 2)</span><br></pre></td></tr></table></figure>
+
+<p>Leo는 모든 음식의 스코빌 지수가 K 이상이 될 때까지 반복하여 섞습니다.<br>Leo가 가진 음식의 스코빌 지수를 담은 배열 scoville과 원하는 스코빌 지수 K가 주어질 때, 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 섞어야 하는 최소 횟수를 return 하도록 solution 함수를 작성해주세요.</p>
+<h2 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h2><ul>
+<li>scoville의 길이는 2 이상 1,000,000 이하입니다.</li>
+<li>K는 0 이상 1,000,000,000 이하입니다.</li>
+<li>scoville의 원소는 각각 0 이상 1,000,000 이하입니다.</li>
+<li>모든 음식의 스코빌 지수를 K 이상으로 만들 수 없는 경우에는 -1을 return 합니다.</li>
+</ul>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th>scoville</th>
+<th>K</th>
+<th>return</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[1, 2, 3, 9, 10, 12]</td>
+<td>7</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><ol>
+<li><p>스코빌 지수가 1인 음식과 2인 음식을 섞으면 음식의 스코빌 지수가 아래와 같이 됩니다. 새로운 음식의 스코빌 지수 = 1 + (2 * 2) = 5 가진 음식의 스코빌 지수 = [5, 3, 9, 10, 12]</p>
+</li>
+<li><p>스코빌 지수가 3인 음식과 5인 음식을 섞으면 음식의 스코빌 지수가 아래와 같이 됩니다. 새로운 음식의 스코빌 지수 = 3 + (5 * 2) = 13 가진 음식의 스코빌 지수 = [13, 9, 10, 12]</p>
+</li>
+</ol>
+<p>모든 음식의 스코빌 지수가 7 이상이 되었고 이때 섞은 횟수는 2회입니다.</p>
+<h2 id="문제인식"><a href="#문제인식" class="headerlink" title="문제인식"></a>문제인식</h2><ol>
+<li>스코빌 공식에 의하면, 가장 맵지 않은 음식과 그 다음으로 맵지 않은 음식을 순차적으로 꺼낼 수 있는 자료구조가 필요하다.</li>
+<li>모든 음식이 스코빌 지수를 k 이상으로 만들어야한다. 뒤집어 생각해보면, 하나라도 스코빌 지수가 k 미만이면, 문제조건에 맞지 않는다.</li>
+</ol>
+<h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
+<li>우선순위 큐를 이용하여, 모든 음식의 스코빌 지수를 오름차순으로 정렬한다.</li>
+<li>스코빌 지수 공식에 따라, 두 개씩 뽑아야 하므로, 반복문을 선언할때, 반복조건을 큐의 데이터 갯수를 2개 까지로 제한한다.</li>
+<li>문제인식 2번에 따라, 하나라도, k 미만의 음식이 있으면, 실격이므로, 우선순위의 큐의 최소값(head에 해당하는 데이터)이 k 미만 역시 반복조건에 AND로 추가한다.</li>
+<li>반복문의 반복 횟수마다 섞은 횟수를 한개 씩 늘려준다.</li>
+<li>모든 음식이 K 지수 이상이라면, head 데이터 역시 K 지수 이상으로, 반복문이 끝날 것이고, 그 반복문의 횟수를 리턴하면, 그것이 정답이 될 것이다.</li>
+<li>만약 모든 음식을 섞었다면, 큐에 남은 데이터는 최종적으로 하나가 남을 것이다. 그 하나의 데이터가 K 지수보다 낮으면, 모든 음식이 K 지수 미만이므로 이 경우에는 -1을 리턴한다. </li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/28/algorithm-4-spicy/" data-id="ckedy4tsr000024v57rm62lb5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/08/28/algorithm-5-disk-controller/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          algorithm-5-disk-controller
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/28/algorithm-3-carpet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">algorithm-3-carpet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-5-disk-controller/">algorithm-5-disk-controller</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-4-spicy/">algorithm-4-spicy</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/27/algorithm-theory-Dynamic-programming/">algorithm-theory-Dynamic-programming</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wanni0928<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
