@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>algorithm-7-h-rod-cutting | Wannistudio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="전화번호 목록문제 설명길이가 N인 막대기가 있다. 막대기를 길이가 자연수가 되도록 여러 조각으로 자를 수 있다. 막대기는 자르는 길이에 따라 값이 정해져 있다. 막대를 자르는 값어치의 합이 최대가 되게끔 막대기를 자르자. 예를 들어, 길이가 4인 막대기를 자를 때, 길이 별 받을 수 있는 값이 아래와 같다고 하자.Length | 1 | 2 | 3 | 4——">
+<meta property="og:type" content="article">
+<meta property="og:title" content="algorithm-7-h-rod-cutting">
+<meta property="og:url" content="https://wanni0928.github.io/2020/08/28/algorithm-7-h-rod-cutting/index.html">
+<meta property="og:site_name" content="Wannistudio">
+<meta property="og:description" content="전화번호 목록문제 설명길이가 N인 막대기가 있다. 막대기를 길이가 자연수가 되도록 여러 조각으로 자를 수 있다. 막대기는 자르는 길이에 따라 값이 정해져 있다. 막대를 자르는 값어치의 합이 최대가 되게끔 막대기를 자르자. 예를 들어, 길이가 4인 막대기를 자를 때, 길이 별 받을 수 있는 값이 아래와 같다고 하자.Length | 1 | 2 | 3 | 4——">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-28T08:05:51.000Z">
+<meta property="article:modified_time" content="2020-08-28T08:06:33.412Z">
+<meta property="article:author" content="wanni0928">
+<meta property="article:tag" content="dp">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Wannistudio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Wannistudio</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wanni0928.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-algorithm-7-h-rod-cutting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/28/algorithm-7-h-rod-cutting/" class="article-date">
+  <time datetime="2020-08-28T08:05:51.000Z" itemprop="datePublished">2020-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      algorithm-7-h-rod-cutting
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="전화번호-목록"><a href="#전화번호-목록" class="headerlink" title="전화번호 목록"></a>전화번호 목록</h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>길이가 N인 막대기가 있다. 막대기를 길이가 자연수가 되도록 여러 조각으로 자를 수 있다.</p>
+<p>막대기는 자르는 길이에 따라 값이 정해져 있다. 막대를 자르는 값어치의 합이 최대가 되게끔 막대기를 자르자.</p>
+<p>예를 들어, 길이가 4인 막대기를 자를 때, 길이 별 받을 수 있는 값이 아래와 같다고 하자.<br>Length | 1 | 2 | 3 | 4<br>———— | ————- | ————- | ————- | ————-<br>Cost | 1 | 5 | 8 | 9</p>
+<p>이 경우에 길이 2에 cost 5인 막대기 두 개가 되게끔 자르면 전체 값어치가 10으로 최대로 값을 받을 수 있을 것이다.</p>
+<p>첫 줄에 막대기 길이 N(1&lt;= N &lt;= 3000)이 주어지고,</p>
+<p>두번째 줄에 1000이하의 자연수 N 개가 공백으로 구분되어 주어진다. i번째 자연수는 길이 i 막대기의 값을 의미한다.</p>
+<p>첫 줄에 값어치 합이 최대가 되도록 막대기를 자를 때, 값어치 합을 출력한다.</p>
+<p>예제 입력 : </p>
+<p>4</p>
+<p>1 5 8 9</p>
+<p>예제 출력 : 10</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.programmers.algorithm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStreamReader;</span><br><span class="line"><span class="keyword">import</span> java.util.StringTokenizer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RodCutting</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> N;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> BufferedReader br;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> StringTokenizer st;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> [] partPrice;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> [] maxPricePerLength;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NumberFormatException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line"></span><br><span class="line">        N = Integer.parseInt(br.readLine());</span><br><span class="line"></span><br><span class="line">        partPrice = <span class="keyword">new</span> <span class="keyword">int</span> [N+<span class="number">1</span>];</span><br><span class="line">        maxPricePerLength = <span class="keyword">new</span> <span class="keyword">int</span> [N+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        st = <span class="keyword">new</span> StringTokenizer(br.readLine(), <span class="string">&quot; &quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++) &#123;</span><br><span class="line">            partPrice[i] = Integer.parseInt(st.nextToken());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        br.close();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++) &#123;</span><br><span class="line">                max = Math.max(max, partPrice[j] + maxPricePerLength[i-j]);</span><br><span class="line">            &#125;</span><br><span class="line">            maxPricePerLength[i] = max;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(maxPricePerLength[N]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/08/28/algorithm-7-h-rod-cutting/" data-id="ckedyfuaj0000rcv513lq5v9g" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/" rel="tag">dp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/28/algorithm-6-h-index/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">algorithm-6-h-index</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-7-h-rod-cutting/">algorithm-7-h-rod-cutting</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-5-disk-controller/">algorithm-5-disk-controller</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-4-spicy/">algorithm-4-spicy</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wanni0928<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

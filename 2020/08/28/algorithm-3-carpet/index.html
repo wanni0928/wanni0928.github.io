@@ -16,7 +16,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/wanni0928/-algorithm/java/JAVA/Carpet/images/carpet.png">
 <meta property="article:published_time" content="2020-08-28T07:54:36.000Z">
-<meta property="article:modified_time" content="2020-08-28T07:57:09.245Z">
+<meta property="article:modified_time" content="2020-08-28T08:08:52.537Z">
 <meta property="article:author" content="wanni0928">
 <meta property="article:tag" content="bp">
 <meta name="twitter:card" content="summary">
@@ -134,7 +134,7 @@
 <li>노란 카펫의 가로, 세로 길이를 구하고, 1번 공식을 대입한다.</li>
 <li>해당 공식이 주어진 갈색 카펫의 갯수와 일치하면, 반복문을 끝내고 정답을 리턴한다.</li>
 </ol>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] solution(<span class="keyword">int</span> brown, <span class="keyword">int</span> yellow) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] answer = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">int</span> yCol = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> yRow = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> o1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> o2 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= yellow; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(yellow % i == <span class="number">0</span>)&#123;</span><br><span class="line">                o1 = i;</span><br><span class="line">                o2 = yellow / i;</span><br><span class="line">                yCol = o1 &gt; o2 ? o1 : o2;</span><br><span class="line">                yRow = o1 &gt; o2 ? o2 : o1;</span><br><span class="line">                result = (yCol + yRow + <span class="number">2</span>) * <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">if</span>(brown == result)&#123;</span><br><span class="line">                    answer[<span class="number">0</span>] = yCol + <span class="number">2</span>;</span><br><span class="line">                    answer[<span class="number">1</span>] = yRow + <span class="number">2</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> answer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -180,7 +180,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
     </div>
   </div>
 
@@ -190,7 +190,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
     </div>
   </div>
 
@@ -212,6 +212,10 @@
       <ul>
         
           <li>
+            <a href="/2020/08/28/algorithm-7-h-rod-cutting/">algorithm-7-h-rod-cutting</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
           </li>
         
@@ -225,10 +229,6 @@
         
           <li>
             <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/27/algorithm-theory-Dynamic-programming/">algorithm-theory-Dynamic-programming</a>
           </li>
         
       </ul>

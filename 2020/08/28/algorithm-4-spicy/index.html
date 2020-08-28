@@ -15,7 +15,7 @@
 <meta property="og:description" content="더 맵게 출처: 프로그래머스문제 설명매운 것을 좋아하는 Leo는 모든 음식의 스코빌 지수를 K 이상으로 만들고 싶습니다. 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 Leo는 스코빌 지수가 가장 낮은 두 개의 음식을 아래와 같이 특별한 방법으로 섞어 새로운 음식을 만듭니다. 1섞은 음식의 스코빌 지수 &#x3D; 가장 맵지 않은 음식의 스코빌 지수">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-28T07:57:41.000Z">
-<meta property="article:modified_time" content="2020-08-28T07:58:22.199Z">
+<meta property="article:modified_time" content="2020-08-28T08:08:25.746Z">
 <meta property="article:author" content="wanni0928">
 <meta property="article:tag" content="heap">
 <meta name="twitter:card" content="summary">
@@ -130,9 +130,9 @@
 <li>문제인식 2번에 따라, 하나라도, k 미만의 음식이 있으면, 실격이므로, 우선순위의 큐의 최소값(head에 해당하는 데이터)이 k 미만 역시 반복조건에 AND로 추가한다.</li>
 <li>반복문의 반복 횟수마다 섞은 횟수를 한개 씩 늘려준다.</li>
 <li>모든 음식이 K 지수 이상이라면, head 데이터 역시 K 지수 이상으로, 반복문이 끝날 것이고, 그 반복문의 횟수를 리턴하면, 그것이 정답이 될 것이다.</li>
-<li>만약 모든 음식을 섞었다면, 큐에 남은 데이터는 최종적으로 하나가 남을 것이다. 그 하나의 데이터가 K 지수보다 낮으면, 모든 음식이 K 지수 미만이므로 이 경우에는 -1을 리턴한다. </li>
+<li>만약 모든 음식을 섞었다면, 큐에 남은 데이터는 최종적으로 하나가 남을 것이다. 그 하나의 데이터가 K 지수보다 낮으면, 모든 음식이 K 지수 미만이므로 이 경우에는 -1을 리턴한다.</li>
 </ol>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.programmers.algorithm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Spicy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solution</span><span class="params">(<span class="keyword">int</span>[] scoville, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> answer = <span class="number">0</span>;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; scovilleQ = <span class="keyword">new</span> PriorityQueue&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> sco : scoville)&#123;</span><br><span class="line">            scovilleQ.add(sco);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> mixedScoville;</span><br><span class="line">        <span class="keyword">int</span> firstMin;</span><br><span class="line">        <span class="keyword">int</span> secMin;</span><br><span class="line">        <span class="keyword">while</span> (scovilleQ.size() &gt; <span class="number">1</span> &amp;&amp; scovilleQ.peek() &lt; K)&#123;</span><br><span class="line">            firstMin = scovilleQ.poll();</span><br><span class="line">            secMin = scovilleQ.poll();</span><br><span class="line">            mixedScoville = firstMin + (secMin * <span class="number">2</span>);</span><br><span class="line">            scovilleQ.add(mixedScoville);</span><br><span class="line">            answer++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(scovilleQ.size() &lt;= <span class="number">1</span> &amp;&amp; scovilleQ.peek() &lt; K) answer = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> answer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SpicyTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//case01</span></span><br><span class="line">        <span class="keyword">int</span>[] scoville = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">12</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">99</span>;</span><br><span class="line"></span><br><span class="line">        Spicy spicy = <span class="keyword">new</span> Spicy();</span><br><span class="line">        System.out.println(spicy.solution(scoville, k));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -178,7 +178,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
     </div>
   </div>
 
@@ -188,7 +188,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
     </div>
   </div>
 
@@ -210,6 +210,10 @@
       <ul>
         
           <li>
+            <a href="/2020/08/28/algorithm-7-h-rod-cutting/">algorithm-7-h-rod-cutting</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
           </li>
         
@@ -223,10 +227,6 @@
         
           <li>
             <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/27/algorithm-theory-Dynamic-programming/">algorithm-theory-Dynamic-programming</a>
           </li>
         
       </ul>

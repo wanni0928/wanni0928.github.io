@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/wanni0928/-algorithm/master/JAVA/DiskController/images/90b91fde-cac4-42c1-98b8-8f8431c52dcf.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/wanni0928/-algorithm/master/JAVA/DiskController/images/a6cff04d-86bb-4b5b-98bf-6359158940ac.png">
 <meta property="article:published_time" content="2020-08-28T07:58:54.000Z">
-<meta property="article:modified_time" content="2020-08-28T08:02:36.321Z">
+<meta property="article:modified_time" content="2020-08-28T08:08:04.310Z">
 <meta property="article:author" content="wanni0928">
 <meta property="article:tag" content="heap">
 <meta name="twitter:card" content="summary">
@@ -149,7 +149,7 @@
 <h2 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h2><ul>
 <li>대기시간 역시 작업 처리시간에 포함해야 한다. 즉, 7번의 작업 처리시간 공식은 <code>대기사간 + 작업처리시간</code>이다.</li>
 </ul>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.programmers.algorithm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiskController</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solution</span><span class="params">(<span class="keyword">int</span>[][] jobs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> answer = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> timePoint = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> length = jobs.length;</span><br><span class="line"></span><br><span class="line">        Queue&lt;<span class="keyword">int</span>[]&gt; queue = <span class="keyword">new</span> PriorityQueue&lt;&gt;(((o1, o2) -&gt; o1[<span class="number">1</span>] - o2[<span class="number">1</span>]));</span><br><span class="line">        Arrays.sort(jobs, (o1, o2) -&gt; o1[<span class="number">0</span>] - o2[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(idx &lt; length || ! queue.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(idx &lt; length &amp;&amp; jobs[idx][<span class="number">0</span>] &lt;= timePoint) queue.offer(jobs[idx++]);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(queue.isEmpty()) timePoint = jobs[idx][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">int</span>[] job = queue.poll();</span><br><span class="line">                answer += timePoint - job[<span class="number">0</span>] + job[<span class="number">1</span>];</span><br><span class="line">                timePoint += job[<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> answer/length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DiskControllerTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[][] jobs = &#123;&#123;<span class="number">0</span>, <span class="number">3</span>&#125;, &#123;<span class="number">1</span>,<span class="number">9</span>&#125;, &#123;<span class="number">2</span>, <span class="number">6</span>&#125;&#125;;</span><br><span class="line">        DiskController diskController = <span class="keyword">new</span> DiskController();</span><br><span class="line">        System.out.println(diskController.solution(jobs));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -195,7 +195,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
     </div>
   </div>
 
@@ -205,7 +205,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
     </div>
   </div>
 
@@ -227,6 +227,10 @@
       <ul>
         
           <li>
+            <a href="/2020/08/28/algorithm-7-h-rod-cutting/">algorithm-7-h-rod-cutting</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
           </li>
         
@@ -240,10 +244,6 @@
         
           <li>
             <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/27/algorithm-theory-Dynamic-programming/">algorithm-theory-Dynamic-programming</a>
           </li>
         
       </ul>

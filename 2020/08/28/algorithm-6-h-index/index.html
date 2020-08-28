@@ -7,22 +7,18 @@
   
   <title>algorithm-6-h-index | Wannistudio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="디스크컨트롤러 출처: 프로그래머스문제 설명하드디스크는 한 번에 하나의 작업만 수행할 수 있습니다. 디스크 컨트롤러를 구현하는 방법은 여러 가지가 있습니다. 가장 일반적인 방법은 요청이 들어온 순서대로 처리하는 것입니다. 예를들어 123- 0ms 시점에 3ms가 소요되는 A작업 요청- 1ms 시점에 9ms가 소요되는 B작업 요청- 2ms 시점에 6ms가 소요">
+  <meta name="description" content="H-Index 출처: 프로그래머스문제 설명H-Index는 과학자의 생산성과 영향력을 나타내는 지표입니다. 어느 과학자의 H-Index를 나타내는 값인 h를 구하려고 합니다. 위키백과1에 따르면, H-Index는 다음과 같이 구합니다. 어떤 과학자가 발표한 논문 n편 중, h번 이상 인용된 논문이 h편 이상이고 나머지 논문이 h번 이하 인용되었다면 h의 최댓">
 <meta property="og:type" content="article">
 <meta property="og:title" content="algorithm-6-h-index">
 <meta property="og:url" content="https://wanni0928.github.io/2020/08/28/algorithm-6-h-index/index.html">
 <meta property="og:site_name" content="Wannistudio">
-<meta property="og:description" content="디스크컨트롤러 출처: 프로그래머스문제 설명하드디스크는 한 번에 하나의 작업만 수행할 수 있습니다. 디스크 컨트롤러를 구현하는 방법은 여러 가지가 있습니다. 가장 일반적인 방법은 요청이 들어온 순서대로 처리하는 것입니다. 예를들어 123- 0ms 시점에 3ms가 소요되는 A작업 요청- 1ms 시점에 9ms가 소요되는 B작업 요청- 2ms 시점에 6ms가 소요">
+<meta property="og:description" content="H-Index 출처: 프로그래머스문제 설명H-Index는 과학자의 생산성과 영향력을 나타내는 지표입니다. 어느 과학자의 H-Index를 나타내는 값인 h를 구하려고 합니다. 위키백과1에 따르면, H-Index는 다음과 같이 구합니다. 어떤 과학자가 발표한 논문 n편 중, h번 이상 인용된 논문이 h편 이상이고 나머지 논문이 h번 이하 인용되었다면 h의 최댓">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/38dc6a53-2d21-4c72-90ac-f059729c51d5.png">
-<meta property="og:image" content="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/90b91fde-cac4-42c1-98b8-8f8431c52dcf.png">
-<meta property="og:image" content="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/a6cff04d-86bb-4b5b-98bf-6359158940ac.png">
 <meta property="article:published_time" content="2020-08-28T07:59:47.000Z">
-<meta property="article:modified_time" content="2020-08-28T08:00:02.769Z">
+<meta property="article:modified_time" content="2020-08-28T08:09:58.139Z">
 <meta property="article:author" content="wanni0928">
 <meta property="article:tag" content="backend, develope, server">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/38dc6a53-2d21-4c72-90ac-f059729c51d5.png">
   
     <link rel="alternate" href="/atom.xml" title="Wannistudio" type="application/atom+xml">
   
@@ -93,63 +89,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="디스크컨트롤러-출처-프로그래머스"><a href="#디스크컨트롤러-출처-프로그래머스" class="headerlink" title="디스크컨트롤러 출처: 프로그래머스"></a>디스크컨트롤러 <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42627">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>하드디스크는 한 번에 하나의 작업만 수행할 수 있습니다. 디스크 컨트롤러를 구현하는 방법은 여러 가지가 있습니다. 가장 일반적인 방법은 요청이 들어온 순서대로 처리하는 것입니다.</p>
-<p>예를들어</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 0ms 시점에 3ms가 소요되는 A작업 요청</span><br><span class="line">- 1ms 시점에 9ms가 소요되는 B작업 요청</span><br><span class="line">- 2ms 시점에 6ms가 소요되는 C작업 요청</span><br></pre></td></tr></table></figure>
-
-<p>와 같은 요청이 들어왔습니다. 이를 그림으로 표현하면 아래와 같습니다.<br><img src="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/38dc6a53-2d21-4c72-90ac-f059729c51d5.png" alt="디스크 컨트롤러"></p>
-<p>한 번에 하나의 요청만을 수행할 수 있기 때문에 각각의 작업을 요청받은 순서대로 처리하면 다음과 같이 처리 됩니다.</p>
-<p><img src="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/90b91fde-cac4-42c1-98b8-8f8431c52dcf.png" alt="디스크 컨트롤러2"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료 (요청에서 종료까지 : 3ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 3ms 시점에 작업을 시작해서 12ms 시점에 작업 완료(요청에서 종료까지 : 11ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 12ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 16ms)</span><br></pre></td></tr></table></figure>
-<p>이 때 각 작업의 요청부터 종료까지 걸린 시간의 평균은 10ms(= (3 + 11 + 16) / 3)가 됩니다.</p>
-<p>하지만 A → C → B 순서대로 처리하면</p>
-<p><img src="https://github.com/wanni0928/-algorithm/blob/java/JAVA/DiskController/images/a6cff04d-86bb-4b5b-98bf-6359158940ac.png" alt="디스크 컨트롤러3"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료(요청에서 종료까지 : 3ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 3ms 시점에 작업을 시작해서 9ms 시점에 작업 완료(요청에서 종료까지 : 7ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 9ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 17ms)</span><br></pre></td></tr></table></figure>
-<p>이렇게 A → C → B의 순서로 처리하면 각 작업의 요청부터 종료까지 걸린 시간의 평균은 9ms(= (3 + 7 + 17) / 3)가 됩니다.</p>
-<p>각 작업에 대해 [작업이 요청되는 시점, 작업의 소요시간]을 담은 2차원 배열 jobs가 매개변수로 주어질 때, 작업의 요청부터 종료까지 걸린 시간의 평균을 가장 줄이는 방법으로 처리하면 평균이 얼마가 되는지 return 하도록 solution 함수를 작성해주세요. (단, 소수점 이하의 수는 버립니다)</p>
+        <h1 id="H-Index-출처-프로그래머스"><a href="#H-Index-출처-프로그래머스" class="headerlink" title="H-Index 출처: 프로그래머스"></a>H-Index <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/42747">출처: 프로그래머스</a></h1><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>H-Index는 과학자의 생산성과 영향력을 나타내는 지표입니다. 어느 과학자의 H-Index를 나타내는 값인 h를 구하려고 합니다. 위키백과1에 따르면, H-Index는 다음과 같이 구합니다.</p>
+<p>어떤 과학자가 발표한 논문 n편 중, h번 이상 인용된 논문이 h편 이상이고 나머지 논문이 h번 이하 인용되었다면 h의 최댓값이 이 과학자의 H-Index입니다.</p>
+<p>어떤 과학자가 발표한 논문의 인용 횟수를 담은 배열 citations가 매개변수로 주어질 때, 이 과학자의 H-Index를 return 하도록 solution 함수를 작성해주세요.</p>
 <h2 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h2><ul>
-<li>jobs의 길이는 1 이상 500 이하입니다.</li>
-<li>jobs의 각 행은 하나의 작업에 대한 [작업이 요청되는 시점, 작업의 소요시간] 입니다.</li>
-<li>각 작업에 대해 작업이 요청되는 시간은 0 이상 1,000 이하입니다.</li>
-<li>각 작업에 대해 작업의 소요시간은 1 이상 1,000 이하입니다.</li>
-<li>하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.</li>
+<li>과학자가 발표한 논문의 수는 1편 이상 1,000편 이하입니다.</li>
+<li>논문별 인용 횟수는 0회 이상 10,000회 이하입니다.</li>
 </ul>
 <h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
 <thead>
 <tr>
-<th>jobs</th>
-<th>Second Header</th>
+<th>citations</th>
+<th>return</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>[[0, 3], [1, 9], [2, 6]]</td>
-<td>9</td>
+<td>[3, 0, 6, 1, 5]</td>
+<td>3</td>
 </tr>
 </tbody></table>
-<h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><p>문제에 주어진 예와 같습니다.</p>
-<ul>
-<li>0ms 시점에 3ms 걸리는 작업 요청이 들어옵니다.</li>
-<li>1ms 시점에 9ms 걸리는 작업 요청이 들어옵니다.</li>
-<li>2ms 시점에 6ms 걸리는 작업 요청이 들어옵니다.</li>
-</ul>
+<h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><p>이 과학자가 발표한 논문의 수는 5편이고, 그중 3편의 논문은 3회 이상 인용되었습니다. 그리고 나머지 2편의 논문은 3회 이하 인용되었기 때문에 이 과학자의 H-Index는 3입니다.</p>
 <h2 id="문제인식"><a href="#문제인식" class="headerlink" title="문제인식"></a>문제인식</h2><ol>
-<li>‘하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.’<br> =&gt; 시작은 작업 요청 시점이 0인 작업부터, 바로 우선순위 큐로 정렬하면, 이 규칙에 어긋난다.</li>
-<li>평균 처리시간을 줄이기 위해선, 작업 요청 시점 순으로 처리하는 것보다, 작업 처리시간의 적은 것부터 처리하는것이 더 효율적이다.</li>
+<li>h-index 설명에 의하면, 인용된 수를 내림차순으로 정렬한 후, 피인용수가 논문수와 같아지거나 피용수가 논문 수보다 더 작아지는 지점을 h-index라고 한다.</li>
 </ol>
 <h2 id="해결방향"><a href="#해결방향" class="headerlink" title="해결방향"></a>해결방향</h2><ol>
-<li>문제인식 1번 부분을 충족하기 위해, 우선 주어진 배열을 ‘작업요청시점’의 오름차순으로 정렬한다.</li>
-<li>문제인식 2번 부분을 충족하기 위한, 우선순위 큐의 인스턴스를 생성하고, ‘작업처리시간’의 오름차순의 정렬기준을 준다.</li>
-<li>문제를 해결하기 위해, 반복문을 선언하는데, 종료 기준을 주어진 배열의 맨끝 인덱스까지, 혹은 큐가 비어있지 않을 때까지로 정한다.</li>
-<li>3번의 반복문 안에 큐에 디스크 작업을 넣는 반복문을 선언하는데, 종료 기준을 ‘작업요청 시점’이하 그리고, 인덱스 번호가 배열의 길이미만 일때 까지로 정한다.</li>
-<li>3번 반복문이 도는 동안, 4번 반복문을 통해 큐에 jobs 데이터가 삽입된다.</li>
-<li>만약 큐가 비어있다면, ‘작업 시작점’에 가장 최근 ,jobs 데이터의 ‘작업요청 시점’을 넣는다.</li>
-<li>큐가 비어있지 않다면, 큐의 데이터를 꺼낸다. 작업 처리시간은 <code>이전작업 완료 시점 - 작업이 요청되는 시점 + 작업의 처리시간</code> 로 이 공식대로 총 작업 처리시간을 구한다.</li>
-<li>모든 디스크 작업의 처리시간 합계를 구하고 평균을 구한 뒤, 그 정답을 리턴한다.</li>
+<li>인용수가 증가하다가 감소하는 ‘최소값’을 찾으면 된다.</li>
 </ol>
-<h2 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h2><ul>
-<li>대기시간 역시 작업 처리시간에 포함해야 한다. 즉, 7번의 작업 처리시간 공식은 <code>대기사간 + 작업처리시간</code>이다.</li>
-</ul>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Comparator;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solution</span><span class="params">(<span class="keyword">int</span>[] citations)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> answer = <span class="number">0</span>;</span><br><span class="line">        Integer[] num = <span class="keyword">new</span> Integer[citations.length];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; citations.length; i++)&#123;</span><br><span class="line">            num[i] = citations[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Arrays.sort(num, Collections.reverseOrder());   </span><br><span class="line">        <span class="keyword">while</span>(answer &lt; citations.length)&#123;</span><br><span class="line">            <span class="keyword">if</span>(num[answer] &lt;= answer)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            answer++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> answer;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -161,6 +127,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/08/28/algorithm-7-h-rod-cutting/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          algorithm-7-h-rod-cutting
+        
+      </div>
+    </a>
   
   
     <a href="/2020/08/28/algorithm-5-disk-controller/" id="article-nav-older" class="article-nav-link-wrap">
@@ -184,7 +159,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
     </div>
   </div>
 
@@ -194,7 +169,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
     </div>
   </div>
 
@@ -216,6 +191,10 @@
       <ul>
         
           <li>
+            <a href="/2020/08/28/algorithm-7-h-rod-cutting/">algorithm-7-h-rod-cutting</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
           </li>
         
@@ -229,10 +208,6 @@
         
           <li>
             <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/27/algorithm-theory-Dynamic-programming/">algorithm-theory-Dynamic-programming</a>
           </li>
         
       </ul>
