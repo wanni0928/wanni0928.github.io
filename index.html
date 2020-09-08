@@ -67,6 +67,104 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JPA_basic -1- Entity persistence" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/" class="article-date">
+  <time datetime="2020-09-08T01:40:32.000Z" itemprop="datePublished">2020-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/">JPA_basic -1- Entity persistence</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JPA에서-가장-중요한-2가지"><a href="#JPA에서-가장-중요한-2가지" class="headerlink" title="JPA에서 가장 중요한 2가지"></a>JPA에서 가장 중요한 2가지</h1><ol>
+<li><p>객체와 관계형 데이터베이스 매핑하기<br>(Object Relational Mapping)</p>
+</li>
+<li><p>영속성 컨텍스트</p>
+</li>
+</ol>
+<h2 id="영속성-컨텍스트"><a href="#영속성-컨텍스트" class="headerlink" title="영속성 컨텍스트"></a>영속성 컨텍스트</h2><ul>
+<li>JPA를 이해하는데 가장 중요한 용어</li>
+<li>“엔티티를 영구 저장하는 환경”</li>
+<li><code>EntityManager.persist(entity);</code></li>
+</ul>
+<h2 id="엔티티-매니저-영속성-컨텍스트"><a href="#엔티티-매니저-영속성-컨텍스트" class="headerlink" title="엔티티 매니저? 영속성 컨텍스트?"></a>엔티티 매니저? 영속성 컨텍스트?</h2><ul>
+<li>영속성 컨텍스트는 논리적인 개념</li>
+<li>눈에 보이지 않는다.</li>
+<li>엔티티 매니저를 통해서 영속성 컨텍스트에 접근</li>
+</ul>
+<h2 id="J2SE-환경"><a href="#J2SE-환경" class="headerlink" title="J2SE 환경"></a>J2SE 환경</h2><p>엔티티 매니저와 영속성 컨텍스트가 1:1</p>
+<h2 id="J2EE-스프링-프레임워크와-같은-컨테이너-환경"><a href="#J2EE-스프링-프레임워크와-같은-컨테이너-환경" class="headerlink" title="J2EE, 스프링 프레임워크와 같은 컨테이너 환경"></a>J2EE, 스프링 프레임워크와 같은 컨테이너 환경</h2><p>엔티티 매니저와 영속성 컨텍스트가 N:1</p>
+<h2 id="엔티티의-생명주기"><a href="#엔티티의-생명주기" class="headerlink" title="엔티티의 생명주기"></a>엔티티의 생명주기</h2><ul>
+<li>비영속 (new/transient) : 영속성 컨텍스트와 전혀 관계가 없는 새로운 상태</li>
+<li>영속 (managed) : 영속성 컨텍스트에 관리되는 상태</li>
+<li>준영속 (detached) : 영속성 컨텍스트에 저장되었다가 분리된 상태</li>
+<li>삭제 (removed) : 삭제된 상태</li>
+</ul>
+<h3 id="비영속"><a href="#비영속" class="headerlink" title="비영속"></a>비영속</h3><p>: 아무것도 아닌 상태</p>
+<h3 id="영속"><a href="#영속" class="headerlink" title="영속"></a>영속</h3><p>: persist 에 집어넣은 상태</p>
+<h3 id="준영속-삭제"><a href="#준영속-삭제" class="headerlink" title="준영속, 삭제"></a>준영속, 삭제</h3><h2 id="영속성-컨텍스트의-이점"><a href="#영속성-컨텍스트의-이점" class="headerlink" title="영속성 컨텍스트의 이점"></a>영속성 컨텍스트의 이점</h2><ul>
+<li>1차 캐시 : 한번 조회한건 쿼리로 날아가지 않는다.(동일한 트랜잭션 안에서)</li>
+<li>동일성 보장</li>
+<li>트랜잭션을 지원하는 쓰기 지연 : 버퍼링 - <code>write</code>을 모았다가 한번에 <code>write</code></li>
+<li>변경 감지(Dirty Checking) : update 할때, JPA가 자동으로 인식해서 flush 해주는 것.</li>
+<li>지연 로딩(Lazy Loading)</li>
+</ul>
+<h2 id="엔티티-조회-1차캐시"><a href="#엔티티-조회-1차캐시" class="headerlink" title="엔티티 조회, 1차캐시"></a>엔티티 조회, 1차캐시</h2><p>1차 캐시 : 한번 조회한건 쿼리로 날아가지 않는다.(동일한 트랜잭션 안에서)</p>
+<h1 id="플러시"><a href="#플러시" class="headerlink" title="플러시"></a>플러시</h1><p>영속성 컨텍스트의 변경내용을 데이터베이스에 반영.</p>
+<h2 id="플러시-발생"><a href="#플러시-발생" class="headerlink" title="플러시 발생"></a>플러시 발생</h2><ul>
+<li>변경 감지</li>
+<li>수정된 엔티티 쓰기 지연 SQL 저장소에 등록</li>
+<li>쓰기 지연 SQL 저장소의 쿼리슷 데이터베이스에 전송 (등록, 수정, 삭제 쿼리)</li>
+</ul>
+<h2 id="플러시-모드-옵션"><a href="#플러시-모드-옵션" class="headerlink" title="플러시 모드 옵션"></a>플러시 모드 옵션</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em.setFlushMode(flushModeType.COMMIT);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>FlushModeType.AUTO</code> : 커밋이나 쿼리를 실행할 때 플러시 (기본값, 거의 이것만 씀)</li>
+<li><code>FlushModeType.COMMIT</code> : 커밋할 때만 플러시 (활용성 거의 0)</li>
+</ul>
+<h2 id="플러시는"><a href="#플러시는" class="headerlink" title="플러시는!"></a>플러시는!</h2><ul>
+<li>영속성 컨텍스트를 비우지 않는다.</li>
+<li>영속성 컨텍스트의 변경 내용을 데이터베이스에 동기화</li>
+<li>트랜잭션이라는 작업 단위가 중요 -&gt; 커밋 직전에만 동기화 하면 됨.</li>
+</ul>
+<h1 id="준영속-상태"><a href="#준영속-상태" class="headerlink" title="준영속 상태"></a>준영속 상태</h1><ul>
+<li>영속 -&gt; 준영속</li>
+<li>영속 상태의 엔티티가 영속성 컨텍스트에서 분리(detached).</li>
+<li>영속성 컨텍스트가 제공하는 기능을 사용 못함.</li>
+</ul>
+<h2 id="준영속-상태로-만드는-방법"><a href="#준영속-상태로-만드는-방법" class="headerlink" title="준영속 상태로 만드는 방법"></a>준영속 상태로 만드는 방법</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 특정 엔티티만 준영속 상태로 전환</span></span><br><span class="line">em.detach(entity);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 영속성 컨텍스트를 완전히 초기화</span></span><br><span class="line">em.clear();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 영속성 컨텍스트를 종료</span></span><br><span class="line">em.close();</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/" data-id="cketah6wo00007sv5bq253svo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JPA/" rel="tag">JPA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-algorithm-7-h-rod-cutting" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/28/algorithm-7-h-rod-cutting/" class="article-date">
@@ -703,56 +801,12 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/07/hello-world/" class="article-date">
-  <time datetime="2020-08-07T07:12:03.377Z" itemprop="datePublished">2020-08-07</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/07/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://wanni0928.github.io/2020/08/07/hello-world/" data-id="cke9k7x1o0003g4v52bbdg0jp" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+  </nav>
 
 </section>
         
@@ -765,7 +819,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JPA/" rel="tag">JPA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
     </div>
   </div>
 
@@ -775,7 +829,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+      <a href="/tags/JPA/" style="font-size: 10px;">JPA</a> <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
     </div>
   </div>
 
@@ -784,7 +838,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
     </div>
   </div>
 
@@ -795,6 +849,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/">JPA_basic -1- Entity persistence</a>
+          </li>
         
           <li>
             <a href="/2020/08/28/algorithm-7-h-rod-cutting/">algorithm-7-h-rod-cutting</a>
@@ -810,10 +868,6 @@
         
           <li>
             <a href="/2020/08/28/algorithm-4-spicy/">algorithm-4-spicy</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/28/algorithm-3-carpet/">algorithm-3-carpet</a>
           </li>
         
       </ul>

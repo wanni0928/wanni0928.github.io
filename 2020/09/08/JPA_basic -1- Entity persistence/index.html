@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JPA_basic -1- Entity persistence | Wannistudio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JPA에서 가장 중요한 2가지 객체와 관계형 데이터베이스 매핑하기(Object Relational Mapping)  영속성 컨텍스트   영속성 컨텍스트 JPA를 이해하는데 가장 중요한 용어 “엔티티를 영구 저장하는 환경” EntityManager.persist(entity);  엔티티 매니저? 영속성 컨텍스트? 영속성 컨텍스트는 논리적인 개념 눈에 보이지">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JPA_basic -1- Entity persistence">
+<meta property="og:url" content="https://wanni0928.github.io/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/index.html">
+<meta property="og:site_name" content="Wannistudio">
+<meta property="og:description" content="JPA에서 가장 중요한 2가지 객체와 관계형 데이터베이스 매핑하기(Object Relational Mapping)  영속성 컨텍스트   영속성 컨텍스트 JPA를 이해하는데 가장 중요한 용어 “엔티티를 영구 저장하는 환경” EntityManager.persist(entity);  엔티티 매니저? 영속성 컨텍스트? 영속성 컨텍스트는 논리적인 개념 눈에 보이지">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-08T01:40:32.000Z">
+<meta property="article:modified_time" content="2020-09-08T01:42:22.502Z">
+<meta property="article:author" content="wanni0928">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Wannistudio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Wannistudio</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wanni0928.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JPA_basic -1- Entity persistence" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/" class="article-date">
+  <time datetime="2020-09-08T01:40:32.000Z" itemprop="datePublished">2020-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JPA_basic -1- Entity persistence
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JPA에서-가장-중요한-2가지"><a href="#JPA에서-가장-중요한-2가지" class="headerlink" title="JPA에서 가장 중요한 2가지"></a>JPA에서 가장 중요한 2가지</h1><ol>
+<li><p>객체와 관계형 데이터베이스 매핑하기<br>(Object Relational Mapping)</p>
+</li>
+<li><p>영속성 컨텍스트</p>
+</li>
+</ol>
+<h2 id="영속성-컨텍스트"><a href="#영속성-컨텍스트" class="headerlink" title="영속성 컨텍스트"></a>영속성 컨텍스트</h2><ul>
+<li>JPA를 이해하는데 가장 중요한 용어</li>
+<li>“엔티티를 영구 저장하는 환경”</li>
+<li><code>EntityManager.persist(entity);</code></li>
+</ul>
+<h2 id="엔티티-매니저-영속성-컨텍스트"><a href="#엔티티-매니저-영속성-컨텍스트" class="headerlink" title="엔티티 매니저? 영속성 컨텍스트?"></a>엔티티 매니저? 영속성 컨텍스트?</h2><ul>
+<li>영속성 컨텍스트는 논리적인 개념</li>
+<li>눈에 보이지 않는다.</li>
+<li>엔티티 매니저를 통해서 영속성 컨텍스트에 접근</li>
+</ul>
+<h2 id="J2SE-환경"><a href="#J2SE-환경" class="headerlink" title="J2SE 환경"></a>J2SE 환경</h2><p>엔티티 매니저와 영속성 컨텍스트가 1:1</p>
+<h2 id="J2EE-스프링-프레임워크와-같은-컨테이너-환경"><a href="#J2EE-스프링-프레임워크와-같은-컨테이너-환경" class="headerlink" title="J2EE, 스프링 프레임워크와 같은 컨테이너 환경"></a>J2EE, 스프링 프레임워크와 같은 컨테이너 환경</h2><p>엔티티 매니저와 영속성 컨텍스트가 N:1</p>
+<h2 id="엔티티의-생명주기"><a href="#엔티티의-생명주기" class="headerlink" title="엔티티의 생명주기"></a>엔티티의 생명주기</h2><ul>
+<li>비영속 (new/transient) : 영속성 컨텍스트와 전혀 관계가 없는 새로운 상태</li>
+<li>영속 (managed) : 영속성 컨텍스트에 관리되는 상태</li>
+<li>준영속 (detached) : 영속성 컨텍스트에 저장되었다가 분리된 상태</li>
+<li>삭제 (removed) : 삭제된 상태</li>
+</ul>
+<h3 id="비영속"><a href="#비영속" class="headerlink" title="비영속"></a>비영속</h3><p>: 아무것도 아닌 상태</p>
+<h3 id="영속"><a href="#영속" class="headerlink" title="영속"></a>영속</h3><p>: persist 에 집어넣은 상태</p>
+<h3 id="준영속-삭제"><a href="#준영속-삭제" class="headerlink" title="준영속, 삭제"></a>준영속, 삭제</h3><h2 id="영속성-컨텍스트의-이점"><a href="#영속성-컨텍스트의-이점" class="headerlink" title="영속성 컨텍스트의 이점"></a>영속성 컨텍스트의 이점</h2><ul>
+<li>1차 캐시 : 한번 조회한건 쿼리로 날아가지 않는다.(동일한 트랜잭션 안에서)</li>
+<li>동일성 보장</li>
+<li>트랜잭션을 지원하는 쓰기 지연 : 버퍼링 - <code>write</code>을 모았다가 한번에 <code>write</code></li>
+<li>변경 감지(Dirty Checking) : update 할때, JPA가 자동으로 인식해서 flush 해주는 것.</li>
+<li>지연 로딩(Lazy Loading)</li>
+</ul>
+<h2 id="엔티티-조회-1차캐시"><a href="#엔티티-조회-1차캐시" class="headerlink" title="엔티티 조회, 1차캐시"></a>엔티티 조회, 1차캐시</h2><p>1차 캐시 : 한번 조회한건 쿼리로 날아가지 않는다.(동일한 트랜잭션 안에서)</p>
+<h1 id="플러시"><a href="#플러시" class="headerlink" title="플러시"></a>플러시</h1><p>영속성 컨텍스트의 변경내용을 데이터베이스에 반영.</p>
+<h2 id="플러시-발생"><a href="#플러시-발생" class="headerlink" title="플러시 발생"></a>플러시 발생</h2><ul>
+<li>변경 감지</li>
+<li>수정된 엔티티 쓰기 지연 SQL 저장소에 등록</li>
+<li>쓰기 지연 SQL 저장소의 쿼리슷 데이터베이스에 전송 (등록, 수정, 삭제 쿼리)</li>
+</ul>
+<h2 id="플러시-모드-옵션"><a href="#플러시-모드-옵션" class="headerlink" title="플러시 모드 옵션"></a>플러시 모드 옵션</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em.setFlushMode(flushModeType.COMMIT);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>FlushModeType.AUTO</code> : 커밋이나 쿼리를 실행할 때 플러시 (기본값, 거의 이것만 씀)</li>
+<li><code>FlushModeType.COMMIT</code> : 커밋할 때만 플러시 (활용성 거의 0)</li>
+</ul>
+<h2 id="플러시는"><a href="#플러시는" class="headerlink" title="플러시는!"></a>플러시는!</h2><ul>
+<li>영속성 컨텍스트를 비우지 않는다.</li>
+<li>영속성 컨텍스트의 변경 내용을 데이터베이스에 동기화</li>
+<li>트랜잭션이라는 작업 단위가 중요 -&gt; 커밋 직전에만 동기화 하면 됨.</li>
+</ul>
+<h1 id="준영속-상태"><a href="#준영속-상태" class="headerlink" title="준영속 상태"></a>준영속 상태</h1><ul>
+<li>영속 -&gt; 준영속</li>
+<li>영속 상태의 엔티티가 영속성 컨텍스트에서 분리(detached).</li>
+<li>영속성 컨텍스트가 제공하는 기능을 사용 못함.</li>
+</ul>
+<h2 id="준영속-상태로-만드는-방법"><a href="#준영속-상태로-만드는-방법" class="headerlink" title="준영속 상태로 만드는 방법"></a>준영속 상태로 만드는 방법</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 특정 엔티티만 준영속 상태로 전환</span></span><br><span class="line">em.detach(entity);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 영속성 컨텍스트를 완전히 초기화</span></span><br><span class="line">em.clear();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 영속성 컨텍스트를 종료</span></span><br><span class="line">em.close();</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wanni0928.github.io/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/" data-id="cketah6wo00007sv5bq253svo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JPA/" rel="tag">JPA</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/28/algorithm-7-h-rod-cutting/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">algorithm-7-h-rod-cutting</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JPA/" rel="tag">JPA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm-java/" rel="tag">algorithm java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bp/" rel="tag">bp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/" rel="tag">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JPA/" style="font-size: 10px;">JPA</a> <a href="/tags/algorithm-java/" style="font-size: 10px;">algorithm java</a> <a href="/tags/bp/" style="font-size: 10px;">bp</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/heap/" style="font-size: 20px;">heap</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/08/JPA_basic%20-1-%20Entity%20persistence/">JPA_basic -1- Entity persistence</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-7-h-rod-cutting/">algorithm-7-h-rod-cutting</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-6-h-index/">algorithm-6-h-index</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-5-disk-controller/">algorithm-5-disk-controller</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/algorithm-4-spicy/">algorithm-4-spicy</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wanni0928<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
